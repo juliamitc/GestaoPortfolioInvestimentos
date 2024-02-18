@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoPortfolio.Domain", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoPortfolio.Infra", "GestaoPortfolio.Infra\GestaoPortfolio.Infra.csproj", "{CF2FDC35-68E6-403C-A710-FB2A1952927E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoPortfolio.Service", "GestaoPortfolio.Service\GestaoPortfolio.Service.csproj", "{42F0E27D-7EAC-4A27-ACA9-A2C063AC2E1B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{CF2FDC35-68E6-403C-A710-FB2A1952927E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF2FDC35-68E6-403C-A710-FB2A1952927E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF2FDC35-68E6-403C-A710-FB2A1952927E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42F0E27D-7EAC-4A27-ACA9-A2C063AC2E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42F0E27D-7EAC-4A27-ACA9-A2C063AC2E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42F0E27D-7EAC-4A27-ACA9-A2C063AC2E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42F0E27D-7EAC-4A27-ACA9-A2C063AC2E1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
