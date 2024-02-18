@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoPortifolio.API.Controllers
 {
-    [ApiController]
-    [Route("/")]
-    public class TestController : ControllerBase
+    public class TestController : BaseController
     {
         private readonly IProdutoRepository produtoRepository;
 

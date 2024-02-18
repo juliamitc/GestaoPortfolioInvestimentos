@@ -21,6 +21,10 @@ namespace GestaoPortifolio.API
             string connectionString = configuration.GetValue<string>("Database:ConnectionString");
 
             // Add services to the container.
+            builder.Services.Configure<RouteOptions>(options =>
+            {
+                options.LowercaseUrls = true;
+            });
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
