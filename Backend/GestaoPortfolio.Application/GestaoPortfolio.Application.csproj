@@ -6,4 +6,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GestaoPortfolio.Domain\GestaoPortfolio.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

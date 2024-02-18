@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoPortfolio.Domain.Interfaces
+namespace GestaoPortfolio.Domain.Interfaces.Services
 {
-    public interface IProdutoRepository : IBaseRepository<Produto>
+    public interface IAlterarProdutoService
     {
-        Task<IEnumerable<Produto>> Listar(Produto produto);
+        Task<Produto> Alterar(Produto produto);
     }
 }

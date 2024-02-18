@@ -1,5 +1,6 @@
 using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Infra.Context;
+using GestaoPortfolio.Infra.Extensions;
 using GestaoPortfolio.Infra.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,19 +18,17 @@ namespace GestaoPortifolio.API
                 .AddJsonFile("appsettings.json", false)
                 .AddJsonFile($"appsettings.{env}.json", false)
                 .Build();
-
-            string connectionString = configuration.GetValue<string>("Database:ConnectionString");
-
+                        
             // Add services to the container.
             builder.Services.Configure<RouteOptions>(options =>
             {
                 options.LowercaseUrls = true;
             });
-            builder.Services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
-            builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
+
+            builder.Services.RegisterDb(configuration);
+            builder.Services.RegisterFacades();
+            builder.Services.RegisterServices();
+            
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

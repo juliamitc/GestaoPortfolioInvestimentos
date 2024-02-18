@@ -16,32 +16,34 @@ namespace GestaoPortfolio.Infra.Repository
             _entities = context.Set<TEntity>();
         }
 
-        public virtual TEntity GetById(object id)
+        public async Task<TEntity> GetById(object id)
         {
-            return _entities.Find(id);
+            return await _entities.FindAsync(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return _entities.ToList();
+            return await _entities.ToListAsync();
         }
 
-        public void Insert(TEntity obj)
+        public async Task<TEntity> Insert(TEntity obj)
         {
-            _context.Set<TEntity>().Add(obj);
-            _context.SaveChanges();
+            await _entities.AddAsync(obj);
+            await _context.SaveChangesAsync();
+            return obj;
         }
 
-        public void Update(TEntity obj)
+        public async Task<TEntity> Update(TEntity obj)
         {
             _context.Entry(obj).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return obj;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _context.Set<TEntity>().Remove(GetById(id));
-            _context.SaveChanges();
+            _context.Set<TEntity>().Remove(await GetById(id));
+            await _context.SaveChangesAsync();
         }
     }
 }
