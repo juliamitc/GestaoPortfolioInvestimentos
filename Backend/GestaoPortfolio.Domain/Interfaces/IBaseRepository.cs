@@ -9,7 +9,7 @@ namespace GestaoPortfolio.Domain.Interfaces
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {
-        TEntity GetById(int id);
+        TEntity GetById(object id);
         IEnumerable<TEntity> GetAll();
         void Insert(TEntity obj);
         void Update(TEntity obj);

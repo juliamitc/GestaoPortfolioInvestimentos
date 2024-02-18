@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GestaoPortfolio.Domain.Interfaces;
+﻿using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Domain.Models;
 using GestaoPortfolio.Infra.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestaoPortfolio.Infra.Repository
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly AppDbContext _context;
+        protected readonly DbSet<TEntity> _entities;
+
         public BaseRepository(AppDbContext context)
         {
             _context = context;
+            _entities = context.Set<TEntity>();
         }
-        public virtual TEntity GetById(int id)
+
+        public virtual TEntity GetById(object id)
         {
-            var query = _context.Set<TEntity>().Where(e => e.Id == id);
-            if (query.Any())
-                return query.FirstOrDefault();
-            return null;
+            return _entities.Find(id);
         }
+
         public virtual IEnumerable<TEntity> GetAll()
         {
-            var query = _context.Set<TEntity>();
-            if (query.Any())
-                return query.ToList();
-            return new List<TEntity>();
+            return _entities.ToList();
         }
 
         public void Insert(TEntity obj)
@@ -37,7 +34,7 @@ namespace GestaoPortfolio.Infra.Repository
 
         public void Update(TEntity obj)
         {
-            _context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Entry(obj).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

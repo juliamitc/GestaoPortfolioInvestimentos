@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace GestaoPortfolio.Domain.Models
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
-        public int Id { get; set; }
+        public object GetId()
+        {
+            PropertyInfo chave = GetType()
+                .GetProperties()
+                .First(x => x.GetCustomAttributes(true).Any(x => x.GetType() == typeof(KeyAttribute)));
 
+            return chave.GetValue(this, null);
+        }
     }
 }

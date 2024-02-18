@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace GestaoPortfolio.Domain.Models.Enum
 {
-    public class ProdutoEnum
+    public class StatusOperacaoEnum
     {
-        enum Produto
+        public enum Status
         {
-            LF,
-            LCI,
-            LCA,
-            CDB,
-            CDI
+            Gravada,
+            Cancelada,
+            Erro,
+            Vencida,
+            Resgatada
         }
     }
 }
