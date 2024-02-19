@@ -9,7 +9,7 @@ namespace GestaoPortfolio.Domain.Models
 {
     public class Cliente : BaseEntity
     {
-        public int IdCliente { get; set; }
+        public int Id { get; set; }
         public string? Nome { get; set; }
         public string? Email { get; set; }
         public string? Conta { get; set; }

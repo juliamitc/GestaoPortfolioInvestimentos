@@ -18,6 +18,9 @@ namespace GestaoPortfolio.Infra.Extensions
                 options.UseSqlServer(connectionString);
             });
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
+            services.AddTransient<ICarteiraRepository, CarteiraRepository>();
+            services.AddTransient<IClienteRepository,  ClienteRepository>();
+            services.AddTransient<IOperacaoRepository, OperacaoRepository>();
         }
     }
 }

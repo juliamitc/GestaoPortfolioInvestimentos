@@ -9,6 +9,9 @@ namespace GestaoPortfolio.Infra.Extensions
         public static void RegisterFacades(this IServiceCollection services)
         {
             services.AddTransient<IProdutoFacade, ProdutoFacade>();
+            services.AddTransient<ICarteiraFacade, CarteiraFacade>();
+            services.AddTransient<IClienteFacade, ClienteFacade>();
+            services.AddTransient<IOperacaoFacade, OperacaoFacade>();
         }
     }
 }

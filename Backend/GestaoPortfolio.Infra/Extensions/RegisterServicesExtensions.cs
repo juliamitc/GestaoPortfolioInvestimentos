@@ -11,6 +11,15 @@ namespace GestaoPortfolio.Infra.Extensions
             services.AddTransient<IIncluirProdutoService, IncluirProdutoService>();
             services.AddTransient<IAlterarProdutoService, AlterarProdutoService>();
             services.AddTransient<IExcluirProdutoService, ExcluirProdutoService>();
+            services.AddTransient<IIncluirPosicaoService, IncluirPosicaoService>();
+            services.AddTransient<IAlterarPosicaoService, AlterarPosicaoService>();
+            services.AddTransient<IExcluirPosicaoService, ExcluirPosicaoService>();
+            services.AddTransient<IIncluirClienteService, IncluirClienteService>();
+            services.AddTransient<IAlterarClienteService, AlterarClienteService>();
+            services.AddTransient<IExcluirClienteService, ExcluirClienteService>();
+            services.AddTransient<IIncluirOperacaoService, IncluirOperacaoService>();
+            services.AddTransient<IAlterarOperacaoService, AlterarOperacaoService>();
+            services.AddTransient<IExcluirOperacaoService, ExcluirOperacaoService>();
         }
     }
 }
