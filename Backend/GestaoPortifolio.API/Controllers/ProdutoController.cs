@@ -1,6 +1,7 @@
 ﻿using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Domain.Interfaces.Facades;
 using GestaoPortfolio.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoPortifolio.API.Controllers
@@ -10,7 +11,7 @@ namespace GestaoPortifolio.API.Controllers
         private readonly IProdutoFacade produtoFacade;
         private readonly IProdutoRepository produtoRepository;
 
-        public ProdutoController(IProdutoFacade produtoFacade, IProdutoRepository produtoRepository)
+        public ProdutoController(IProdutoFacade produtoFacade, IProdutoRepository produtoRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             this.produtoFacade = produtoFacade;
             this.produtoRepository = produtoRepository;

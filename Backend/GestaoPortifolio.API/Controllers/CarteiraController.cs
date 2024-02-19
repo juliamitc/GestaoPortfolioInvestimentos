@@ -10,7 +10,7 @@ namespace GestaoPortifolio.API.Controllers
         private readonly ICarteiraFacade carteiraFacade;
         private readonly ICarteiraRepository carteiraRepository;
 
-        public CarteiraController(ICarteiraFacade carteiraFacade, ICarteiraRepository carteiraRepository)
+        public CarteiraController(ICarteiraFacade carteiraFacade, ICarteiraRepository carteiraRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             this.carteiraFacade = carteiraFacade;
             this.carteiraRepository = carteiraRepository;

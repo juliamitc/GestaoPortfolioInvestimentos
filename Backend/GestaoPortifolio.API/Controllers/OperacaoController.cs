@@ -10,7 +10,7 @@ namespace GestaoPortifolio.API.Controllers
         private readonly IOperacaoFacade operacaoFacade;
         private readonly IOperacaoRepository operacaoRepository;
 
-        public OperacaoController(IOperacaoFacade operacaoFacade, IOperacaoRepository operacaoRepository)
+        public OperacaoController(IOperacaoFacade operacaoFacade, IOperacaoRepository operacaoRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             this.operacaoFacade = operacaoFacade;
             this.operacaoRepository = operacaoRepository;

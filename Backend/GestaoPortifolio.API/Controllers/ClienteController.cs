@@ -10,7 +10,7 @@ namespace GestaoPortifolio.API.Controllers
         private readonly IClienteFacade clienteFacade;
         private readonly IClienteRepository clienteRepository;
 
-        public ClienteController(IClienteFacade clienteFacade, IClienteRepository clienteRepository)
+        public ClienteController(IClienteFacade clienteFacade, IClienteRepository clienteRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             this.clienteFacade = clienteFacade;
             this.clienteRepository = clienteRepository;
