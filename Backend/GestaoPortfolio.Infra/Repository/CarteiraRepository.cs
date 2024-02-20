@@ -23,5 +23,14 @@ namespace GestaoPortfolio.Infra.Repository
 
             return await linq.ToListAsync();
         }
+
+        public async Task<IEnumerable<Carteira>> ListarVencimentos(DateTime dataVencimento)
+        {
+            var linq = from e in _entities
+                       where e.DataVencimento.Date == dataVencimento.Date
+                       select e;
+
+            return await linq.ToListAsync();
+        }
     }
 }

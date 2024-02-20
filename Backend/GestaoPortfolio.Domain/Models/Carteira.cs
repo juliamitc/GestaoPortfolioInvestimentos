@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace GestaoPortfolio.Domain.Models
 {
@@ -15,13 +10,13 @@ namespace GestaoPortfolio.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [JsonIgnore]
-        [Column("id_posicao")]
+        [Column("codigo_posicao_cliente")]
         public int Id { get; set; }
-        [Column("id_cliente")]
+        [Column("codigo_cliente")]
         public int IdCliente { get; set; }
         [Column("nome_cliente")]
         public string NomeCliente { get; set; }
-        [Column("id_operacao")]
+        [Column("codigo_operacao")]
         public int IdOperacao { get; set; }
         [Column("codigo_produto")]
         public int CodigoProduto { get; set; }

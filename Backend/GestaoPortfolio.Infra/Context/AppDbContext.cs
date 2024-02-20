@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace GestaoPortfolio.Infra.Context
 {
@@ -15,7 +14,12 @@ namespace GestaoPortfolio.Infra.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Produto>();
+            modelBuilder.Entity<Oferta>();
+            modelBuilder.Entity<Cliente>();
+            modelBuilder.Entity<Operacao>();
+            modelBuilder.Entity<Carteira>();
             modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Job>();
 
             base.OnModelCreating(modelBuilder);
         }

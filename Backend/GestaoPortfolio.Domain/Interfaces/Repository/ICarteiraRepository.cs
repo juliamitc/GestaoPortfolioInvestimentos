@@ -10,5 +10,6 @@ namespace GestaoPortfolio.Domain.Interfaces
     public interface ICarteiraRepository : IBaseRepository<Carteira>
     {
         Task<IEnumerable<Carteira>> Listar(Carteira carteira);
+        Task<IEnumerable<Carteira>> ListarVencimentos(DateTime dataVencimento);
     }
 }

@@ -101,10 +101,10 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='OPERACAO' AND xtype='U')
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO_CLIENTE' AND xtype='U')
   BEGIN
 	CREATE TABLE POSICAO_CLIENTE (
-		id_posicao_cliente INT IDENTITY (1,1) PRIMARY KEY
-		,id_cliente INT NOT NULL FOREIGN KEY REFERENCES CLIENTE(ID_CLIENTE)
+		codigo_posicao_cliente INT IDENTITY (1,1) PRIMARY KEY
+		,codigo_cliente INT NOT NULL FOREIGN KEY REFERENCES CLIENTE(ID_CLIENTE)
 		,nome_cliente VARCHAR(50) NOT NULL
-		,id_operacao INT NOT NULL FOREIGN KEY REFERENCES OPERACAO(ID_OPERACAO)
+		,codigo_operacao INT NOT NULL FOREIGN KEY REFERENCES OPERACAO(ID_OPERACAO)
 		,codigo_produto INT NOT NULL FOREIGN KEY REFERENCES PRODUTO(codigo_produto)
 		,nome_papel VARCHAR(50) NOT NULL
 		,quantidade INT NOT NULL
@@ -115,10 +115,27 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO_CLIENTE' AND xtype='
   END
 
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='JOBS' AND xtype='U')
+  BEGIN
+	CREATE TABLE JOBS (
+		codigo_job INT IDENTITY (1,1) PRIMARY KEY
+		, sigla VARCHAR(50) NOT NULL
+		, descricao VARCHAR(120)
+		, inicio INT NOT NULL
+		, intervalo_minutos INT NOT NULL
+		, ultima_execucao DATETIME
+		, proxima_execucao DATETIME
+		, tipo_intervalo INT NOT NULL
+	)
+  END
+
+
 --Test data
 INSERT INTO PRODUTO (nome, descricao, ativo) VALUES ('CDB', 'CERTIFICADO DE DEPOSITO BANCARIO', 1)
 GO
 INSERT INTO OFERTA (nome_papel, codigo_produto, quantidade_disponivel, quantidade_original,preco_unitario,data_vencimento) VALUES ('CDBTESTE', (SELECT TOP 1 codigo_produto FROM PRODUTO), 100, 100, 50.99, GETDATE() + 30)
+GO
+INSERT INTO JOBS (sigla, descricao, inicio, intervalo_minutos, tipo_intervalo) VALUES ('EMAIL_VCTO', 'Comunicação de vencimento de operações', 8, 0, 0)
 GO
 
 

@@ -1,4 +1,5 @@
 ﻿using GestaoPortfolio.Domain.Interfaces;
+using GestaoPortfolio.Domain.Interfaces.Repository;
 using GestaoPortfolio.Infra.Context;
 using GestaoPortfolio.Infra.Repository;
 using Microsoft.Data.SqlClient;
@@ -29,6 +30,7 @@ namespace GestaoPortfolio.Infra.Extensions
             services.AddTransient<IOperacaoRepository, OperacaoRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IOfertaRepository, OfertaRepository>();
+            services.AddTransient<IJobRepository, JobRepository>();
         }
 
         /// <summary>
