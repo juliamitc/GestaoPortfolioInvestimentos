@@ -40,7 +40,7 @@ namespace GestaoPortfolio.Domain.Models
                 case kdTipoInvervalo.Diario:
                     if (ProximaExecucao == null)
                         ProximaExecucao = DateTime.Today.AddHours(Inicio);
-                    ProximaExecucao.Value.AddDays(1);
+                    ProximaExecucao = ProximaExecucao.Value.AddDays(1);
                     break;
                 case kdTipoInvervalo.Continuo:
                     ProximaExecucao = DateTime.Now.AddMinutes(IntervaloMinutos);

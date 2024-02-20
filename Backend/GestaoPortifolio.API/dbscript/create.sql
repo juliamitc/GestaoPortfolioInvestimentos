@@ -135,7 +135,7 @@ INSERT INTO PRODUTO (nome, descricao, ativo) VALUES ('CDB', 'CERTIFICADO DE DEPO
 GO
 INSERT INTO OFERTA (nome_papel, codigo_produto, quantidade_disponivel, quantidade_original,preco_unitario,data_vencimento) VALUES ('CDBTESTE', (SELECT TOP 1 codigo_produto FROM PRODUTO), 100, 100, 50.99, GETDATE() + 30)
 GO
-INSERT INTO JOBS (sigla, descricao, inicio, intervalo_minutos, tipo_intervalo) VALUES ('EMAIL_VCTO', 'Comunicação de vencimento de operações', 8, 0, 0)
+INSERT INTO JOBS (sigla, descricao, inicio, intervalo_minutos, tipo_intervalo) VALUES ('EMAIL_VCTO', 'Comunicacao de vencimento de operacoes', 8, 0, 0)
 GO
 
 
