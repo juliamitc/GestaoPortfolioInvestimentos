@@ -20,10 +20,14 @@ namespace GestaoPortfolio.Infra.Repository
             {
                 linq = linq.Where(x => x.IdCliente == carteira.IdCliente);
             }
+            else
+            {
+                await GetAll();
+            }
 
             return await linq.ToListAsync();
         }
-
+        public Carteira Carteira { get; set; }
         public async Task<IEnumerable<Carteira>> ListarVencimentos(DateTime dataVencimento)
         {
             var linq = from e in _entities
@@ -31,6 +35,16 @@ namespace GestaoPortfolio.Infra.Repository
                        select e;
 
             return await linq.ToListAsync();
+        }
+
+        public Carteira BuscarCarteiraCliente(int idOferta, int idCliente)
+        {
+            Carteira carteira = new Carteira();
+
+            var linq = from e in _entities select e;
+            linq = linq.Where(x => x.IdCliente == idCliente && x.CodigoOferta == idOferta);
+            carteira = linq.FirstOrDefault();
+            return carteira;
         }
     }
 }

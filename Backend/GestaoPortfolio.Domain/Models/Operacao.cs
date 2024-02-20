@@ -14,16 +14,19 @@ namespace GestaoPortfolio.Domain.Models
         [Column("id_operacao")]
         [JsonIgnore]
         public int IdOperacao { get; set; }
+        [Column("codigo_oferta")]
+        public int CodigoOferta { get; set; } 
         [Column("tipo_evento")]
         [JsonIgnore]
         public Evento Evento { get; set; }
         [Column("quantidade_operacao")]
-        public double QuantidadeOperacao { get; set; }
+        public int QuantidadeOperacao { get; set; }
         [Column("quantidade_disponivel_estoque")]
-        public double QuantidadeDisponivelEstoque { get; set; }
+        public int QuantidadeDisponivelEstoque { get; set; }
         [Column("valor_preco_unitario")]
         public double ValorPrecoUnitario { get; set; }
         [Column("valor_total_operacao")]
+        [JsonIgnore]
         public double ValorTotalOperacao { get; set; }
         [Column("status")]
         [JsonIgnore]

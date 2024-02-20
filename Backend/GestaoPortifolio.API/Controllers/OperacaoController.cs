@@ -1,8 +1,12 @@
 ﻿
+using GestaoPortfolio.Application.Kafka;
 using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Domain.Interfaces.Facades;
+using GestaoPortfolio.Domain.Interfaces.Services;
+using GestaoPortfolio.Domain.Kafka;
 using GestaoPortfolio.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using static GestaoPortfolio.Domain.Models.Enum.EventoEnum;
 using static GestaoPortfolio.Domain.Models.Enum.StatusEnum;
 
@@ -12,11 +16,14 @@ namespace GestaoPortifolio.API.Controllers
     {
         private readonly IOperacaoFacade operacaoFacade;
         private readonly IOperacaoRepository operacaoRepository;
-
-        public OperacaoController(IOperacaoFacade operacaoFacade, IOperacaoRepository operacaoRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        private readonly IProdutorKafka produtorKafka;
+        private readonly IAtualizarCarteiraEstoqueService atualizarCarteiraEstoque;
+        public OperacaoController(IProdutorKafka produtor, IOperacaoFacade operacaoFacade, IOperacaoRepository operacaoRepository, IHttpContextAccessor httpContextAccessor, IAtualizarCarteiraEstoqueService atualizarCarteiraEstoqueService) : base(httpContextAccessor)
         {
+            produtorKafka = produtor;
             this.operacaoFacade = operacaoFacade;
             this.operacaoRepository = operacaoRepository;
+            this.atualizarCarteiraEstoque = atualizarCarteiraEstoqueService;
         }
 
         [HttpGet]
@@ -43,22 +50,16 @@ namespace GestaoPortifolio.API.Controllers
             return Ok(resultado);
         }
 
-        [HttpDelete]
-        [Route("excluir/{id}")]
-        public async Task<IActionResult> DeleteOperacao([FromRoute] int id)
-        {
-            await operacaoFacade.Excluir(id);
-            return Ok();
-        }
-
         [HttpPost]
         [Route("incluir/venda")]
         public async Task<IActionResult> PostOperacaoVenda([FromBody] Operacao operacao)
         {
             operacao.Evento = Evento.Venda;
             operacao.DataOperacao = DateTime.Now;
-            operacao.Status = Status.Resgatada;
-            var resultado = await operacaoFacade.Inserir(operacao);
+            operacao.Status = Status.Gravada;
+
+            await produtorKafka.ProduzirMensagem("ORDEM_VENDA", userId?.ToString(), JsonConvert.SerializeObject(operacao));
+            var resultado = await atualizarCarteiraEstoque.TratarOperacao(operacao);
             return Ok(resultado);
         }
 
@@ -70,7 +71,9 @@ namespace GestaoPortifolio.API.Controllers
             operacao.Evento = Evento.Compra;
             operacao.DataOperacao = DateTime.Now;
             operacao.Status = Status.Gravada;
-            var resultado = await operacaoFacade.Inserir(operacao);
+
+            await produtorKafka.ProduzirMensagem("ORDEM_COMPRA", userId?.ToString(), JsonConvert.SerializeObject(operacao));
+            var resultado = await atualizarCarteiraEstoque.TratarOperacao(operacao);
             return Ok(resultado);
         }
     }

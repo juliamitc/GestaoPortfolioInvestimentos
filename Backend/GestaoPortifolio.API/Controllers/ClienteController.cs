@@ -40,12 +40,5 @@ namespace GestaoPortifolio.API.Controllers
             return Ok(resultado);
         }
 
-        [HttpDelete]
-        [Route("excluir/{id}")]
-        public async Task<IActionResult> DeleteCliente([FromRoute] int id)
-        {
-            await clienteFacade.Excluir(id);
-            return Ok();
-        }
     }
 }

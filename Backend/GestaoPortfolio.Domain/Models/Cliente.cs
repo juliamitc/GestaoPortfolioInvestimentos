@@ -29,6 +29,8 @@ namespace GestaoPortfolio.Domain.Models
         [Column("tipo_pessoa")]
         public char TipoPessoa { get; set; }
         [Column("documento")]
-        public string DocumentoIdentificacao { get; set; }        
+        public string DocumentoIdentificacao { get; set; }
+        [Column("ativo")]
+        public bool Ativo { get; set; } 
     }   
 }

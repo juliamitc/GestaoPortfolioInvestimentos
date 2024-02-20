@@ -23,6 +23,7 @@ namespace GestaoPortfolio.Infra.Extensions
             services.AddTransient<IIncluirOfertaService, IncluirOfertaService>();
             services.AddTransient<IAlterarOfertaService, AlterarOfertaService>();
             services.AddTransient<IExcluirOfertaService, ExcluirOfertaService>();
+            services.AddTransient<IAtualizarCarteiraEstoqueService, AtualizarCarteiraEstoqueService>();
         }
     }
 }

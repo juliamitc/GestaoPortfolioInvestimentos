@@ -20,9 +20,9 @@ namespace GestaoPortfolio.Domain.Models
         [Column("quantidade_original")]
         public int QuantidadeOriginal { get; set; }
         [Column("preco_unitario")]
-        public float PrecoUnitario { get; set; }
+        public double PrecoUnitario { get; set; }
         [Column("data_vencimento")]
-        public DateTime? DataVencimento { get; set; }
+        public DateTime DataVencimento { get; set; }
         [Column("ativo")]
         public bool Ativo { get; set; }
         [Column("data_insercao")]

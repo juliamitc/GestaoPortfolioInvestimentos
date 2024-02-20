@@ -26,6 +26,10 @@ namespace GestaoPortfolio.Infra.Repository
                 {
                     linq = linq.Where(x => cliente.Nome == x.Nome);
                 }
+                else
+                {
+                    await GetAll();
+                }
             }
 
             return await linq.ToListAsync();

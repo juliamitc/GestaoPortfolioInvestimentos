@@ -45,12 +45,5 @@ namespace GestaoPortifolio.API.Controllers
             return Ok(resultado);
         }
 
-        [HttpDelete]
-        [Route("excluir/{id}")]
-        public async Task<IActionResult> DeleteProduto([FromRoute] int id)
-        {
-            await produtoFacade.Excluir(id);
-            return Ok();
-        }
     }
 }

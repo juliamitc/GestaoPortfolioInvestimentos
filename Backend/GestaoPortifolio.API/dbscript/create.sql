@@ -43,6 +43,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='CLIENTE' AND xtype='U')
         ,email varchar(50) NOT NULL
         ,tipo_pessoa char NOT NULL
         ,documento varchar(20) NOT NULL
+        ,ativo BIT NOT NULL DEFAULT(1)
     )
   END
 
@@ -72,7 +73,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='OFERTA' AND xtype='U')
         ,quantidade_disponivel      INT      NOT NULL
         ,quantidade_original        INT      NOT NULL
         ,preco_unitario             FLOAT    NOT NULL
-        ,data_vencimento            DATE     
+        ,data_vencimento            DATETIME     
         ,ativo                      BIT      NOT NULL DEFAULT (1)
         ,data_insercao              DATETIME DEFAULT (GETDATE())
         ,data_ultima_atualizacao    DATETIME
@@ -105,7 +106,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO_CLIENTE' AND xtype='
 		,codigo_cliente INT NOT NULL FOREIGN KEY REFERENCES CLIENTE(ID_CLIENTE)
 		,nome_cliente VARCHAR(50) NOT NULL
 		,codigo_operacao INT NOT NULL FOREIGN KEY REFERENCES OPERACAO(ID_OPERACAO)
-		,codigo_produto INT NOT NULL FOREIGN KEY REFERENCES PRODUTO(codigo_produto)
+		,codigo_oferta INT NOT NULL FOREIGN KEY REFERENCES OFERTA(codigo_oferta)
 		,nome_papel VARCHAR(50) NOT NULL
 		,quantidade INT NOT NULL
 		,valor_preco_unitario FLOAT NOT NULL

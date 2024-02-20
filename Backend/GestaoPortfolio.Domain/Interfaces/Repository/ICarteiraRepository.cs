@@ -11,5 +11,6 @@ namespace GestaoPortfolio.Domain.Interfaces
     {
         Task<IEnumerable<Carteira>> Listar(Carteira carteira);
         Task<IEnumerable<Carteira>> ListarVencimentos(DateTime dataVencimento);
+        Carteira BuscarCarteiraCliente(int idOferta, int idCliente);
     }
 }

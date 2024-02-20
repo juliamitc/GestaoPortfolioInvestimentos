@@ -26,11 +26,12 @@ namespace GestaoPortfolio.Infra.Repository
                 if (!string.IsNullOrWhiteSpace(produto.Nome))
                 {
                     linq = linq.Where(x => produto.Nome == x.Nome);
-                }
-
-                if (!string.IsNullOrWhiteSpace(produto.Descricao))
+                } else if (!string.IsNullOrWhiteSpace(produto.Descricao))
                 {
                     linq = linq.Where(x => produto.Descricao == x.Descricao);
+                } else
+                {
+                    await GetAll();
                 }
             }
 

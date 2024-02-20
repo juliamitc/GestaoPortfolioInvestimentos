@@ -16,34 +16,65 @@ namespace GestaoPortfolio.Infra.Repository
             _entities = context.Set<TEntity>();
         }
 
-        public async Task<TEntity> GetById(object id)
+        public object GetById(object id)
+        {
+            return  _entities.Find(id);
+        }
+
+        public async Task<TEntity> GetByIdAsync(object id)
         {
             return await _entities.FindAsync(id);
         }
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _entities.ToListAsync();
+            try
+            {
+                return await _entities.ToListAsync();
+            } catch (Exception ex) { 
+                 var erro = ex.InnerException.Message;
+                return await _entities.ToListAsync();
+            }  
         }
 
         public async Task<TEntity> Insert(TEntity obj)
         {
             await _entities.AddAsync(obj);
-            await _context.SaveChangesAsync();
+            try {
+                await _context.SaveChangesAsync();
+            } catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+
             return obj;
         }
 
         public async Task<TEntity> Update(TEntity obj)
         {
             _context.Entry(obj).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }catch (Exception ex)
+            {
+                var erro = ex.InnerException.Message;
+            }
+
             return obj;
         }
 
         public async Task Delete(int id)
         {
-            _context.Set<TEntity>().Remove(await GetById(id));
-            await _context.SaveChangesAsync();
+            _context.Set<TEntity>().Remove(await GetByIdAsync(id));
+            try
+            {
+                await _context.SaveChangesAsync();
+            } catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+
         }
     }
 }

@@ -20,6 +20,9 @@ namespace GestaoPortfolio.Infra.Repository
             if (oferta.CodigoOferta > 0)
             {
                 linq = linq.Where(x => x.CodigoOferta == oferta.CodigoOferta);
+            } else
+            {
+               await GetAll();
             }
 
             return await linq.ToListAsync();
