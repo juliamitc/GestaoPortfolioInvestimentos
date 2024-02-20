@@ -20,7 +20,7 @@ namespace GestaoPortfolio.Application.Kafka
             ConsumerConfig consumerConfig = new ConsumerConfig()
             {
                 BootstrapServers = configuration.GetValue<string>("Kafka:BrokerUrl"),
-                GroupId = "ordem_compra_consumidor"
+                GroupId = Guid.NewGuid().ToString()
             };
 
             ConsumerBuilder<string, string> consumerBuilder = new ConsumerBuilder<string, string>(consumerConfig);
