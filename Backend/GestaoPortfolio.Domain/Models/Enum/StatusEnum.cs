@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoPortfolio.Domain.Models.Enum
 {
-    public class StatusOperacaoEnum
+    public class StatusEnum
     {
         public enum Status
         {

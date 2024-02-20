@@ -12,6 +12,7 @@ namespace GestaoPortfolio.Infra.Extensions
             services.AddTransient<ICarteiraFacade, CarteiraFacade>();
             services.AddTransient<IClienteFacade, ClienteFacade>();
             services.AddTransient<IOperacaoFacade, OperacaoFacade>();
+            services.AddTransient<IOfertaFacade, OfertaFacade>();
         }
     }
 }

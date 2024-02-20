@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GestaoPortfolio.Domain.Models
 {
@@ -9,6 +10,7 @@ namespace GestaoPortfolio.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("codigo_produto")]
+        [JsonIgnore]
         public int Codigo { get; set; }
         [Column("nome")]
         public string Nome { get; set; }
@@ -17,8 +19,10 @@ namespace GestaoPortfolio.Domain.Models
         [Column("ativo")]
         public bool ativo { get; set; }
         [Column("data_insercao")]
+        [JsonIgnore]
         public DateTime? DataInsercao { get; set; }
         [Column("data_ultima_atualizacao")]
+        [JsonIgnore]
         public DateTime? DataUltimaAtualizacao { get; set; }
         [Column("codigo_usuario_atualizacao")]
         public int? CodigoUsuarioAtualizacao { get; set; }

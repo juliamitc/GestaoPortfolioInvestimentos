@@ -15,7 +15,7 @@ namespace GestaoPortfolio.Infra.Extensions
         {
             string connectionString = configuration.GetValue<string>("Database:ConnectionString");
 
-            CriarBanco(connectionString);
+            //CriarBanco(connectionString);
 
             connectionString += ";Initial Catalog=gstportfoliodb";
 
@@ -28,6 +28,7 @@ namespace GestaoPortfolio.Infra.Extensions
             services.AddTransient<IClienteRepository,  ClienteRepository>();
             services.AddTransient<IOperacaoRepository, OperacaoRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IOfertaRepository, OfertaRepository>();
         }
 
         /// <summary>

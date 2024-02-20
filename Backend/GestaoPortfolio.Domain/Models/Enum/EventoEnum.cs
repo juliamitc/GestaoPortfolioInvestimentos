@@ -8,7 +8,7 @@ namespace GestaoPortfolio.Domain.Models.Enum
 {
     public class EventoEnum
     {
-        enum Evento
+        public enum Evento
         {
             Compra,
             Venda,

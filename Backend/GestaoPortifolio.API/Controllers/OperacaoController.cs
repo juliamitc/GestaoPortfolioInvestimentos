@@ -1,7 +1,10 @@
-﻿using GestaoPortfolio.Domain.Interfaces;
+﻿
+using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Domain.Interfaces.Facades;
 using GestaoPortfolio.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using static GestaoPortfolio.Domain.Models.Enum.EventoEnum;
+using static GestaoPortfolio.Domain.Models.Enum.StatusEnum;
 
 namespace GestaoPortifolio.API.Controllers
 {
@@ -17,7 +20,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpGet]
-        [Route("operacao")]
+        [Route("listar")]
         public async Task<IActionResult> GetOperacao([FromQuery] Operacao operacao)
         {
             var resultado = await operacaoRepository.Listar(operacao);
@@ -25,7 +28,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPost]
-        [Route("operacao")]
+        [Route("incluir")]
         public async Task<IActionResult> PostOperacao([FromBody] Operacao operacao)
         {
             var resultado = await operacaoFacade.Inserir(operacao);
@@ -33,7 +36,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPut]
-        [Route("operacao")]
+        [Route("alterar")]
         public async Task<IActionResult> PutOperacao([FromBody] Operacao operacao)
         {
             var resultado = await operacaoFacade.Alterar(operacao);
@@ -41,11 +44,34 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpDelete]
-        [Route("operacao/{id}")]
+        [Route("excluir/{id}")]
         public async Task<IActionResult> DeleteOperacao([FromRoute] int id)
         {
             await operacaoFacade.Excluir(id);
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("incluir/venda")]
+        public async Task<IActionResult> PostOperacaoVenda([FromBody] Operacao operacao)
+        {
+            operacao.Evento = Evento.Venda;
+            operacao.DataOperacao = DateTime.Now;
+            operacao.Status = Status.Resgatada;
+            var resultado = await operacaoFacade.Inserir(operacao);
+            return Ok(resultado);
+        }
+
+
+        [HttpPost]
+        [Route("incluir/compra")]
+        public async Task<IActionResult> PostOperacaoCompra([FromBody] Operacao operacao)
+        {
+            operacao.Evento = Evento.Compra;
+            operacao.DataOperacao = DateTime.Now;
+            operacao.Status = Status.Gravada;
+            var resultado = await operacaoFacade.Inserir(operacao);
+            return Ok(resultado);
         }
     }
 }

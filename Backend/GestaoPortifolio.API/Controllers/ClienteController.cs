@@ -17,7 +17,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpGet]
-        [Route("cliente")]
+        [Route("listar")]
         public async Task<IActionResult> GetCliente([FromQuery] Cliente cliente)
         {
             var resultado = await clienteRepository.Listar(cliente);
@@ -25,7 +25,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPost]
-        [Route("cliente")]
+        [Route("incluir")]
         public async Task<IActionResult> PostCliente([FromBody] Cliente cliente)
         {
             var resultado = await clienteFacade.Inserir(cliente);
@@ -33,7 +33,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPut]
-        [Route("cliente")]
+        [Route("alterar")]
         public async Task<IActionResult> PutCliente([FromBody] Cliente cliente)
         {
             var resultado = await clienteFacade.Alterar(cliente);
@@ -41,7 +41,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpDelete]
-        [Route("cliente/{id}")]
+        [Route("excluir/{id}")]
         public async Task<IActionResult> DeleteCliente([FromRoute] int id)
         {
             await clienteFacade.Excluir(id);

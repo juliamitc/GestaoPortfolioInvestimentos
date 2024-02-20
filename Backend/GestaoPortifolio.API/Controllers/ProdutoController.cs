@@ -18,7 +18,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpGet]
-        [Route("produto")]
+        [Route("listar")]
         public async Task<IActionResult> GetProduto([FromQuery] Produto produto)
         {
             var resultado = await produtoRepository.Listar(produto);
@@ -26,23 +26,27 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPost]
-        [Route("produto")]
+        [Route("criar")]
         public async Task<IActionResult> PostProduto([FromBody] Produto produto)
         {
+            produto.DataInsercao = DateTime.Now;
+            produto.DataUltimaAtualizacao = DateTime.Now;
             var resultado = await produtoFacade.Inserir(produto);
             return Ok(resultado);
         }
 
         [HttpPut]
-        [Route("produto")]
+        [Route("alterar")]
         public async Task<IActionResult> PutProduto([FromBody] Produto produto)
         {
+            produto.DataInsercao = DateTime.Now;
+            produto.DataUltimaAtualizacao = DateTime.Now;
             var resultado = await produtoFacade.Alterar(produto);
             return Ok(resultado);
         }
 
         [HttpDelete]
-        [Route("produto/{id}")]
+        [Route("excluir/{id}")]
         public async Task<IActionResult> DeleteProduto([FromRoute] int id)
         {
             await produtoFacade.Excluir(id);

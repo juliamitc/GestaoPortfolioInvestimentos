@@ -1,6 +1,7 @@
 ﻿using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Domain.Interfaces.Services;
 using GestaoPortfolio.Domain.Models;
+using static GestaoPortfolio.Domain.Models.Enum.EventoEnum;
 
 namespace GestaoPortfolio.Application.Services
 {

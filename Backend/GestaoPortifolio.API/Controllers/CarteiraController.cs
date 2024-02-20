@@ -17,7 +17,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpGet]
-        [Route("carteira")]
+        [Route("listar")]
         public async Task<IActionResult> GetCarteira([FromQuery] Carteira carteira)
         {
             var resultado = await carteiraRepository.Listar(carteira);
@@ -25,7 +25,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPost]
-        [Route("carteira")]
+        [Route("incluir")]
         public async Task<IActionResult> PostCarteira([FromBody] Carteira carteira)
         {
             var resultado = await carteiraFacade.IncluirPosicao(carteira);
@@ -33,7 +33,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPut]
-        [Route("carteira")]
+        [Route("alterar")]
         public async Task<IActionResult> PutCarteira([FromBody] Carteira carteira)
         {
             var resultado = await carteiraFacade.AlterarPosicao(carteira);
@@ -41,7 +41,7 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpDelete]
-        [Route("carteira/{idPosicao}")]
+        [Route("excluir/{idPosicao}")]
         public async Task<IActionResult> DeleteCarteira([FromRoute] int idPosicao)
         {
             await carteiraFacade.ExcluirPosicao(idPosicao);

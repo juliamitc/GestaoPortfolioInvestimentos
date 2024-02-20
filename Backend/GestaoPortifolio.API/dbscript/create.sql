@@ -32,6 +32,20 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='USUARIO' AND xtype='U')
     );
   END
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='CLIENTE' AND xtype='U')
+  BEGIN
+    CREATE TABLE CLIENTE
+    (
+        id_cliente INT IDENTITY (1,1) PRIMARY KEY
+        ,nome_cliente varchar(50) NOT NULL
+        ,numero_conta varchar(10) NOT NULL
+        ,numero_agencia varchar(5) NOT NULL
+        ,email varchar(50) NOT NULL
+        ,tipo_pessoa char NOT NULL
+        ,documento varchar(20) NOT NULL
+    )
+  END
+
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='PRODUTO' AND xtype='U')
   BEGIN
@@ -52,8 +66,9 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='OFERTA' AND xtype='U')
   BEGIN
     CREATE TABLE OFERTA
     (
-        codigo_oferta               BIGINT   IDENTITY (1,1) PRIMARY KEY
+        codigo_oferta               INT   IDENTITY (1,1) PRIMARY KEY
         ,codigo_produto             INT      NOT NULL FOREIGN KEY REFERENCES PRODUTO(codigo_produto)
+        ,nome_papel                 varchar(50) NOT NULL
         ,quantidade_disponivel      INT      NOT NULL
         ,quantidade_original        INT      NOT NULL
         ,preco_unitario             FLOAT    NOT NULL
@@ -70,27 +85,34 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='OPERACAO' AND xtype='U')
   BEGIN
     CREATE TABLE OPERACAO
     (
-        codigo_operacao BIGINT IDENTITY (1,1) PRIMARY KEY
-        ,quantidade INT NOT NULL
-        ,preco_unitario FLOAT NOT NULL
-        ,valor_total FLOAT NOT NULL
+        id_operacao INT IDENTITY (1,1) PRIMARY KEY
+        ,codigo_oferta INT NOT NULL FOREIGN KEY REFERENCES OFERTA(codigo_oferta)
         ,tipo_evento INT NOT NULL
-        ,estado INT NOT NULL
-        ,data_insercao DATETIME DEFAULT (GETDATE())
+        ,quantidade_operacao INT NOT NULL
+        ,quantidade_disponivel_estoque INT NOT NULL
+        ,valor_preco_unitario FLOAT NOT NULL
+        ,valor_total_operacao FLOAT NOT NULL
+        ,status INT NOT NULL
+        ,data_operacao DATETIME DEFAULT (GETDATE())
+        ,id_cliente INT NOT NULL FOREIGN KEY REFERENCES CLIENTE(ID_CLIENTE)
     )
   END
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO' AND xtype='U')
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO_CLIENTE' AND xtype='U')
   BEGIN
-    CREATE TABLE POSICAO
-    (
-        codigo_posicao BIGINT IDENTITY (1,1) PRIMARY KEY
-        ,codigo_operacao BIGINT NOT NULL FOREIGN KEY REFERENCES OPERACAO(codigo_operacao)
-        ,data_insercao              DATETIME DEFAULT (GETDATE())
-    )
+	CREATE TABLE POSICAO_CLIENTE (
+		id_posicao_cliente INT IDENTITY (1,1) PRIMARY KEY
+		,id_cliente INT NOT NULL FOREIGN KEY REFERENCES CLIENTE(ID_CLIENTE)
+		,nome_cliente VARCHAR(50) NOT NULL
+		,id_operacao INT NOT NULL FOREIGN KEY REFERENCES OPERACAO(ID_OPERACAO)
+		,codigo_produto INT NOT NULL FOREIGN KEY REFERENCES PRODUTO(codigo_produto)
+		,nome_papel VARCHAR(50) NOT NULL
+		,quantidade INT NOT NULL
+		,valor_preco_unitario FLOAT NOT NULL
+		,valor_total_operacao FLOAT NOT NULL
+		,data_vencimento DATE NOT NULL
+	)
   END
-
-
 
 
 --Test data
