@@ -118,7 +118,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO_CLIENTE' AND xtype='
 --Test data
 INSERT INTO PRODUTO (nome, descricao, ativo) VALUES ('CDB', 'CERTIFICADO DE DEPOSITO BANCARIO', 1)
 GO
-INSERT INTO OFERTA (codigo_produto, quantidade_disponivel, quantidade_original,preco_unitario,data_vencimento) VALUES ((SELECT TOP 1 codigo_produto FROM PRODUTO), 100, 100, 50.99, GETDATE() + 30)
+INSERT INTO OFERTA (nome_papel, codigo_produto, quantidade_disponivel, quantidade_original,preco_unitario,data_vencimento) VALUES ('CDBTESTE', (SELECT TOP 1 codigo_produto FROM PRODUTO), 100, 100, 50.99, GETDATE() + 30)
 GO
 
 
