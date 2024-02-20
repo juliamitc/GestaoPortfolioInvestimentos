@@ -1,24 +1,35 @@
-﻿using GestaoPortfolio.Domain.Kafka;
+﻿using GestaoPortfolio.Domain.Interfaces.Facades;
+using GestaoPortfolio.Domain.Kafka;
+using GestaoPortfolio.Domain.Models;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoPortfolio.Application.Kafka
 {
     public class OrdemCompraConsumidor : ConsumidorKafka, IOrdemCompraConsumidor
     {
-        public OrdemCompraConsumidor(IConfiguration configuration) 
+        private readonly IServiceScopeFactory serviceScopeFactory;
+
+        public OrdemCompraConsumidor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory) 
             : base(configuration)
         {
+            this.serviceScopeFactory = serviceScopeFactory;
         }
 
         protected override async Task Processar(string mensagem)
         {
             Debug.WriteLine(mensagem);
+
+            Oferta oferta = JsonConvert.DeserializeObject<Oferta>(mensagem);
+
+            using (var scope = serviceScopeFactory.CreateScope())
+            {
+                var ofertaFacade = scope.ServiceProvider.GetRequiredService<IOfertaFacade>();
+
+                 await ofertaFacade.Inserir(oferta);
+            }
         }
     }
 }
