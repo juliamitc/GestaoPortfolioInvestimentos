@@ -50,8 +50,15 @@ namespace GestaoPortfolio.Application.Services
             else
             {
                 Carteira carteira = carteiraRepository.BuscarCarteiraCliente(operacao.CodigoOferta, operacao.IdCliente);
-                if (operacao.QuantidadeOperacao <= carteira.Quantidade || operacao.QuantidadeOperacao >= 0) {
-                    carteira.ValorTotalOperacao -= operacao.ValorTotalOperacao;
+
+                //Se a solicitação de venda for maior que a quantidade da posição, entende-se que é um resgate completo e ajusta-se a quantidade para a mesma da carteira
+                if (operacao.QuantidadeOperacao > carteira.Quantidade)
+                {
+                    operacao.QuantidadeOperacao = carteira.Quantidade;
+                }
+
+                if (operacao.QuantidadeOperacao <= carteira.Quantidade || operacao.QuantidadeOperacao >= 0) 
+                {   
                     await AtualizarCarteiraEstoqueVenda(oferta, carteira, operacao);
                 } else
                 {
@@ -74,26 +81,39 @@ namespace GestaoPortfolio.Application.Services
             } else
             {
                 carteira.Quantidade -= operacao.QuantidadeOperacao;
+                carteira.ValorTotalOperacao -= operacao.ValorTotalOperacao;
                 await carteiraFacade.AlterarPosicao(carteira);
             }
         }
 
         private async Task AtualizarCarteiraEstoqueCompra(Oferta oferta, Operacao operacao, Cliente cliente)
         {
-            Carteira carteira = new Carteira();
-
             oferta.QuantidadeDisponivel -= operacao.QuantidadeOperacao;
             await ofertaFacade.Alterar(oferta);
 
-            carteira.IdCliente = cliente.Id;
-            carteira.NomeCliente = cliente.Nome;
-            carteira.CodigoOferta = oferta.CodigoOferta;
-            carteira.Papel = oferta.Papel;
-            carteira.Quantidade = operacao.QuantidadeOperacao;
-            carteira.PrecoUnitario = oferta.PrecoUnitario;
-            carteira.ValorTotalOperacao = operacao.ValorTotalOperacao;
-            carteira.DataVencimento = oferta.DataVencimento;
-            await carteiraFacade.IncluirPosicao(carteira);
+            var posicaoExistente = carteiraRepository.BuscarCarteiraCliente(oferta.CodigoOferta, cliente.Id);
+
+            if (posicaoExistente == null)
+            {
+                Carteira carteira = new Carteira
+                {
+                    IdCliente = cliente.Id,
+                    NomeCliente = cliente.Nome,
+                    CodigoOferta = oferta.CodigoOferta,
+                    Papel = oferta.Papel,
+                    Quantidade = operacao.QuantidadeOperacao,
+                    PrecoUnitario = oferta.PrecoUnitario,
+                    ValorTotalOperacao = operacao.ValorTotalOperacao,
+                    DataVencimento = oferta.DataVencimento
+                };
+                await carteiraFacade.IncluirPosicao(carteira);
+            }
+            else
+            {
+                posicaoExistente.Quantidade += operacao.QuantidadeOperacao;
+                posicaoExistente.ValorTotalOperacao += operacao.ValorTotalOperacao;
+                await carteiraFacade.AlterarPosicao(posicaoExistente);
+            }
         }
     }
 }
