@@ -34,6 +34,7 @@ namespace GestaoPortfolio.Application.Services
             operacao.ValorPrecoUnitario = oferta.PrecoUnitario;
             operacao.ValorTotalOperacao = operacao.ValorPrecoUnitario * operacao.QuantidadeOperacao;
             operacao.QuantidadeDisponivelEstoque = oferta.QuantidadeDisponivel;
+            operacao.CodigoProduto = oferta.CodigoProduto;
 
             if (operacao.Evento == Evento.Compra)
             {
