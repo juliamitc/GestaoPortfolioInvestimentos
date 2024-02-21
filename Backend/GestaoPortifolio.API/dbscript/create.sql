@@ -88,6 +88,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='OPERACAO' AND xtype='U')
     (
         id_operacao INT IDENTITY (1,1) PRIMARY KEY
         ,codigo_oferta INT NOT NULL FOREIGN KEY REFERENCES OFERTA(codigo_oferta)
+        ,codigo_produto             INT      NOT NULL FOREIGN KEY REFERENCES PRODUTO(codigo_produto)
         ,tipo_evento INT NOT NULL
         ,quantidade_operacao INT NOT NULL
         ,quantidade_disponivel_estoque INT NOT NULL
@@ -105,7 +106,6 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='POSICAO_CLIENTE' AND xtype='
 		codigo_posicao_cliente INT IDENTITY (1,1) PRIMARY KEY
 		,codigo_cliente INT NOT NULL FOREIGN KEY REFERENCES CLIENTE(ID_CLIENTE)
 		,nome_cliente VARCHAR(50) NOT NULL
-		,codigo_operacao INT NOT NULL FOREIGN KEY REFERENCES OPERACAO(ID_OPERACAO)
 		,codigo_oferta INT NOT NULL FOREIGN KEY REFERENCES OFERTA(codigo_oferta)
 		,nome_papel VARCHAR(50) NOT NULL
 		,quantidade INT NOT NULL

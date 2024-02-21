@@ -28,12 +28,27 @@ namespace GestaoPortifolio.API.Controllers
             return Ok(resultado);
         }
 
+        [HttpGet]
+        [Route("extrato")]
+        public async Task<IActionResult> GetExtrato([FromQuery] Operacao operacao)
+        {
+            var resultado = await operacaoRepository.ListarExtrato(operacao);
+            return Ok(resultado);
+        }
+
         [HttpPost]
         [Route("incluir")]
         public async Task<IActionResult> PostOperacao([FromBody] Operacao operacao)
         {
             var resultado = await operacaoFacade.Inserir(operacao);
-            return Ok(resultado);
+            if(resultado == null)
+            {
+                return BadRequest("Quantidade inválida!");
+            }else
+            {
+                return Ok(resultado);
+            }
+
         }
 
         [HttpPut]

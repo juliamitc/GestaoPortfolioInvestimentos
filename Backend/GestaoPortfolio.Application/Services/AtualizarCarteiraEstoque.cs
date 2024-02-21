@@ -28,24 +28,38 @@ namespace GestaoPortfolio.Application.Services
 
         public async Task<Operacao> TratarOperacao(Operacao operacao)
         {
+            Operacao resultado = null ;
             Oferta oferta = ofertaRepository.GetById(operacao.CodigoOferta);
             Cliente cliente = clienteRepository.GetById(operacao.IdCliente);
             operacao.ValorPrecoUnitario = oferta.PrecoUnitario;
             operacao.ValorTotalOperacao = operacao.ValorPrecoUnitario * operacao.QuantidadeOperacao;
             operacao.QuantidadeDisponivelEstoque = oferta.QuantidadeDisponivel;
 
-            var resultado = await operacaoFacade.Inserir(operacao);
-
             if (operacao.Evento == Evento.Compra)
             {
-                await AtualizarCarteiraEstoqueCompra(oferta, operacao, cliente);
+                if (operacao.QuantidadeOperacao > oferta.QuantidadeDisponivel || operacao.QuantidadeOperacao <= 0)
+                {
+                    return resultado;
+                }
+                else
+                {
+
+                    await AtualizarCarteiraEstoqueCompra(oferta, operacao, cliente);
+                }
             }
             else
             {
                 Carteira carteira = carteiraRepository.BuscarCarteiraCliente(operacao.CodigoOferta, operacao.IdCliente);
+                if (operacao.QuantidadeOperacao <= carteira.Quantidade || operacao.QuantidadeOperacao >= 0) {
+                    carteira.ValorTotalOperacao -= operacao.ValorTotalOperacao;
+                    await AtualizarCarteiraEstoqueVenda(oferta, carteira, operacao);
+                } else
+                {
+                    return resultado;
+                }
 
-                await AtualizarCarteiraEstoqueVenda(oferta, carteira, operacao);
             }
+            resultado = await operacaoFacade.Inserir(operacao);
 
             return resultado;
         }
@@ -73,7 +87,6 @@ namespace GestaoPortfolio.Application.Services
 
             carteira.IdCliente = cliente.Id;
             carteira.NomeCliente = cliente.Nome;
-            carteira.IdOperacao = operacao.IdOperacao;
             carteira.CodigoOferta = oferta.CodigoOferta;
             carteira.Papel = oferta.Papel;
             carteira.Quantidade = operacao.QuantidadeOperacao;

@@ -14,7 +14,9 @@ namespace GestaoPortfolio.Domain.Models
         [Column("id_operacao")]
         public int IdOperacao { get; set; }
         [Column("codigo_oferta")]
-        public int CodigoOferta { get; set; } 
+        public int CodigoOferta { get; set; }
+        [Column("codigo_produto")]
+        public int CodigoProduto { get; set; }
         [Column("tipo_evento")]
         public Evento Evento { get; set; }
         [Column("quantidade_operacao")]

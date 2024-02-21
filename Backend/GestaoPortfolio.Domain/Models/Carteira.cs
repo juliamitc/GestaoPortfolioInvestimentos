@@ -15,8 +15,6 @@ namespace GestaoPortfolio.Domain.Models
         public int IdCliente { get; set; }
         [Column("nome_cliente")]
         public string NomeCliente { get; set; }
-        [Column("codigo_operacao")]
-        public int IdOperacao { get; set; }
         [Column("codigo_oferta")]
         public int CodigoOferta { get; set; }
         [Column("nome_papel")]
