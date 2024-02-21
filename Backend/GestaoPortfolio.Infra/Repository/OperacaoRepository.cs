@@ -2,7 +2,6 @@
 using GestaoPortfolio.Domain.Models;
 using GestaoPortfolio.Infra.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
 
 namespace GestaoPortfolio.Infra.Repository
 {
@@ -13,11 +12,21 @@ namespace GestaoPortfolio.Infra.Repository
         {
         }
 
-        public async Task<IEnumerable<Operacao>> ListarExtrato(Operacao operacao)
+        public async Task<IEnumerable<ExtratoProduto>> ListarExtrato(Operacao operacao)
         {
-            var linq = from e in _entities select e;
-            IEnumerable<ExtratoProduto> extrato = new List<ExtratoProduto>();
-            IEnumerable<Operacao> resultado = new List<Operacao>();
+            var linq = from e in _entities 
+                       select new ExtratoProduto()
+                       {
+                           CodigoOferta = e.CodigoOferta,
+                           CodigoProduto = e.CodigoProduto,
+                           IdCliente = e.IdCliente,
+                           IdOperacao = e.IdOperacao,
+                           QuantidadeDisponivelEstoque = e.QuantidadeDisponivelEstoque,
+                           TipoEvento = e.Evento,
+                           QuantidadeMovimentada = e.QuantidadeOperacao,
+                           ValorOperacao = e.ValorTotalOperacao,
+                           DataMovimentacao = e.DataOperacao
+                       };
 
             if (operacao.IdCliente > 0)
             {
@@ -25,12 +34,7 @@ namespace GestaoPortfolio.Infra.Repository
             }
             else if (operacao.CodigoProduto > 0) {
                 linq = linq.Where(x => x.CodigoProduto == operacao.CodigoProduto);
-            }
-            else
-            {
-                resultado = await GetAll();
-                return resultado;
-            }
+            }            
 
             return await linq.ToListAsync();
         }

@@ -10,6 +10,6 @@ namespace GestaoPortfolio.Domain.Interfaces
     public interface IOperacaoRepository : IBaseRepository<Operacao>
     {
         Task<IEnumerable<Operacao>> Listar(Operacao operacao);
-        Task<IEnumerable<Operacao>> ListarExtrato(Operacao operacao);
+        Task<IEnumerable<ExtratoProduto>> ListarExtrato(Operacao operacao);
     }
 }

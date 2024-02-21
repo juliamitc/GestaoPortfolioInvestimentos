@@ -17,6 +17,6 @@ namespace GestaoPortfolio.Domain.Models
         public Evento TipoEvento { get; set; }
         public DateTime? DataMovimentacao { get; set; }
         public int QuantidadeDisponivelEstoque { get; set; }
-        public int idCliente { get; set; }
+        public int IdCliente { get; set; }
     }
 }
