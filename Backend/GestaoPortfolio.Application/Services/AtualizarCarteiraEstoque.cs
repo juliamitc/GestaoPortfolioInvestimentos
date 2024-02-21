@@ -1,9 +1,7 @@
-﻿using GestaoPortfolio.Application.Facades;
-using GestaoPortfolio.Domain.Interfaces;
+﻿using GestaoPortfolio.Domain.Interfaces;
 using GestaoPortfolio.Domain.Interfaces.Facades;
 using GestaoPortfolio.Domain.Interfaces.Services;
 using GestaoPortfolio.Domain.Models;
-using Microsoft.AspNetCore.Mvc;
 using static GestaoPortfolio.Domain.Models.Enum.EventoEnum;
 
 namespace GestaoPortfolio.Application.Services
@@ -28,50 +26,50 @@ namespace GestaoPortfolio.Application.Services
             this.ofertaRepository = ofertaRepository;
         }
 
-        public Task<Operacao> TratarOperacao(Operacao operacao)
+        public async Task<Operacao> TratarOperacao(Operacao operacao)
         {
-            Oferta oferta = (Oferta)ofertaRepository.GetById(operacao.CodigoOferta);
-            Cliente cliente = (Cliente)clienteRepository.GetById(operacao.IdCliente);
+            Oferta oferta = ofertaRepository.GetById(operacao.CodigoOferta);
+            Cliente cliente = clienteRepository.GetById(operacao.IdCliente);
             operacao.ValorPrecoUnitario = oferta.PrecoUnitario;
-            operacao.ValorTotalOperacao = (operacao.ValorPrecoUnitario * operacao.QuantidadeOperacao);
+            operacao.ValorTotalOperacao = operacao.ValorPrecoUnitario * operacao.QuantidadeOperacao;
             operacao.QuantidadeDisponivelEstoque = oferta.QuantidadeDisponivel;
 
-            var resultado = operacaoFacade.Inserir(operacao);
+            var resultado = await operacaoFacade.Inserir(operacao);
 
             if (operacao.Evento == Evento.Compra)
             {
-                AtualizarCarteiraEstoqueCompra(oferta, operacao, cliente);
+                await AtualizarCarteiraEstoqueCompra(oferta, operacao, cliente);
             }
             else
             {
                 Carteira carteira = carteiraRepository.BuscarCarteiraCliente(operacao.CodigoOferta, operacao.IdCliente);
 
-                AtualizarCarteiraEstoqueVenda(oferta, carteira, operacao);
+                await AtualizarCarteiraEstoqueVenda(oferta, carteira, operacao);
             }
 
             return resultado;
         }
-        public void AtualizarCarteiraEstoqueVenda(Oferta oferta, Carteira carteira, Operacao operacao)
+        private async Task AtualizarCarteiraEstoqueVenda(Oferta oferta, Carteira carteira, Operacao operacao)
         {
             oferta.QuantidadeDisponivel += operacao.QuantidadeOperacao;
-            ofertaFacade.Alterar(oferta);
+            await ofertaFacade.Alterar(oferta);
 
             if(carteira.Quantidade == operacao.QuantidadeOperacao)
             {
-                carteiraFacade.ExcluirPosicao(carteira.Id);
+                await carteiraFacade.ExcluirPosicao(carteira.Id);
             } else
             {
                 carteira.Quantidade -= operacao.QuantidadeOperacao;
-                carteiraFacade.AlterarPosicao(carteira);
+                await carteiraFacade.AlterarPosicao(carteira);
             }
         }
 
-        public void AtualizarCarteiraEstoqueCompra(Oferta oferta, Operacao operacao, Cliente cliente)
+        private async Task AtualizarCarteiraEstoqueCompra(Oferta oferta, Operacao operacao, Cliente cliente)
         {
             Carteira carteira = new Carteira();
 
             oferta.QuantidadeDisponivel -= operacao.QuantidadeOperacao;
-            ofertaFacade.Alterar(oferta);
+            await ofertaFacade.Alterar(oferta);
 
             carteira.IdCliente = cliente.Id;
             carteira.NomeCliente = cliente.Nome;
@@ -82,8 +80,7 @@ namespace GestaoPortfolio.Application.Services
             carteira.PrecoUnitario = oferta.PrecoUnitario;
             carteira.ValorTotalOperacao = operacao.ValorTotalOperacao;
             carteira.DataVencimento = oferta.DataVencimento;
-            carteiraFacade.IncluirPosicao(carteira);
-
+            await carteiraFacade.IncluirPosicao(carteira);
         }
     }
 }

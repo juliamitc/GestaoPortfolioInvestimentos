@@ -16,7 +16,6 @@ namespace GestaoPortfolio.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id_cliente")]
-        [JsonIgnore]
         public int Id { get; set; }
         [Column("nome_cliente")]
         public string Nome { get; set; }

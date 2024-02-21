@@ -11,11 +11,11 @@ using static GestaoPortfolio.Domain.Models.Enum.StatusEnum;
 
 namespace GestaoPortfolio.Application.Kafka
 {
-    public class OrdemCompraConsumidor : ConsumidorKafka, IOrdemCompraConsumidor
+    public class OrdemVendaConsumidor : ConsumidorKafka, IOrdemVendaConsumidor
     {
         private readonly IServiceScopeFactory serviceScopeFactory;
 
-        public OrdemCompraConsumidor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory) 
+        public OrdemVendaConsumidor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory) 
             : base(configuration)
         {
             this.serviceScopeFactory = serviceScopeFactory;
@@ -31,7 +31,7 @@ namespace GestaoPortfolio.Application.Kafka
             {
                 IAtualizarCarteiraEstoqueService atualizarCarteiraEstoque = scope.ServiceProvider.GetRequiredService<IAtualizarCarteiraEstoqueService>();
 
-                operacao.Evento = Evento.Compra;
+                operacao.Evento = Evento.Venda;
                 operacao.DataOperacao = DateTime.Now;
                 operacao.Status = Status.Gravada;
                 await atualizarCarteiraEstoque.TratarOperacao(operacao);

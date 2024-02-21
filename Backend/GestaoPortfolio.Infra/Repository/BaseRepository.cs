@@ -16,7 +16,7 @@ namespace GestaoPortfolio.Infra.Repository
             _entities = context.Set<TEntity>();
         }
 
-        public object GetById(object id)
+        public TEntity GetById(object id)
         {
             return  _entities.Find(id);
         }

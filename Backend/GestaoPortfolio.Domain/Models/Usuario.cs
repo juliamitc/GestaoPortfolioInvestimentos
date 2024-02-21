@@ -10,7 +10,6 @@ namespace GestaoPortfolio.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("codigo_usuario")]
-        [JsonIgnore]
         public int CodigoUsuario { get; set; }
         [Column("nome")]
         public string Nome { get; set; }
@@ -19,7 +18,6 @@ namespace GestaoPortfolio.Domain.Models
         [Column("tipo")]
         public int Tipo { get; set; }
         [Column("data_insercao")]
-        [JsonIgnore]
         public DateTime? DataInsercao { get; set; }
         
         /// <summary>

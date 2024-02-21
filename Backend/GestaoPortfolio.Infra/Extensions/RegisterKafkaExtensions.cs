@@ -28,6 +28,12 @@ namespace GestaoPortfolio.Infra.Extensions
                     Name = "ORDEM_COMPRA",
                     NumPartitions = 1,
                     ReplicationFactor = 1
+                },
+                new()
+                {
+                    Name = "ORDEM_VENDA",
+                    NumPartitions = 1,
+                    ReplicationFactor = 1
                 }
             };
 
@@ -44,6 +50,7 @@ namespace GestaoPortfolio.Infra.Extensions
 
             services.AddTransient<IProdutorKafka, ProdutorKafka>();
             services.AddTransient<IOrdemCompraConsumidor, OrdemCompraConsumidor>();
+            services.AddTransient<IOrdemVendaConsumidor, OrdemVendaConsumidor>();
         }
     }
 }

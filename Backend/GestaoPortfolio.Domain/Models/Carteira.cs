@@ -9,7 +9,6 @@ namespace GestaoPortfolio.Domain.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [JsonIgnore]
         [Column("codigo_posicao_cliente")]
         public int Id { get; set; }
         [Column("codigo_cliente")]

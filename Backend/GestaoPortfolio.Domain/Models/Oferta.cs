@@ -9,7 +9,6 @@ namespace GestaoPortfolio.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("codigo_oferta")]
-        [JsonIgnore]
         public int CodigoOferta { get; set; }
         [Column("codigo_produto")]
         public int CodigoProduto { get; set; }
@@ -26,10 +25,8 @@ namespace GestaoPortfolio.Domain.Models
         [Column("ativo")]
         public bool Ativo { get; set; }
         [Column("data_insercao")]
-        [JsonIgnore]
         public DateTime? DataInsercao { get; set; }
         [Column("data_ultima_atualizacao")]
-        [JsonIgnore]
         public DateTime? DataUltimaAtualizacao { get; set; }
         [Column("codigo_usuario_atualizacao")]
         public int? CodigoUsuarioAtualizacao { get; set; }

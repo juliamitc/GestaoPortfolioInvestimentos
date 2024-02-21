@@ -33,6 +33,7 @@ namespace GestaoPortifolio.API
             builder.Services.RegisterServices();
             builder.Services.RegisterKafka(configuration);
             builder.Services.AddHostedService<OrdemCompraHostedService>();
+            builder.Services.AddHostedService<OrdemVendaHostedService>();
             builder.Services.AddHostedService<EmailVencimentoHostedService>();
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
