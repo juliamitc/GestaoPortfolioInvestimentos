@@ -18,7 +18,7 @@ Após se certificar de que tudo está rodando corretamente, basta abrir a soluti
 
 Quando o projeto está em execução, o banco é criado (ele é criado e apagado em todas as execuções) e uma página do Swagger abre. Os testes das funcionalidades são bem simples, porém é necessário seguir uma ordem para que as informações necessárias estejam preenchidas nas tabelas quando realizar a chamada.
 
-1º - É necessário criar um usuário na rota "usuario/criar", e em seguida utilizar as mesmas informações para fazer o login em "usuario/login". Se tudo estiver certo, é só copiar o token e colar dentro do campo disponível na modal que irá abrir ao clicar no botão de Authorize no topo da página.
+1º - É necessário criar um usuário na rota "usuario/criar", e em seguida utilizar as mesmas informações para fazer o login em "usuario/login". Se tudo estiver certo, é só copiar o token e colar dentro do campo disponível na modal que irá abrir ao clicar no botão de Authorize no topo da página. Importante: o e-mail precisa ter o padrão correto, terminando com "@xxxx.xxx".
 
 2º - É necessário utilizar as rotas de POST para incluir um cliente (cliente/inserir) e um produto (produto/criar), essas são as tabelas mais básicas e não possuem dependências.
 
