@@ -13,25 +13,13 @@ namespace GestaoPortifolio.API.Controllers
     [Authorize]
     public class OfertaController : BaseController
     {
-        private readonly IProdutorKafka produtorKafka;
         private readonly IOfertaFacade ofertaFacade;
         private readonly IOfertaRepository ofertaRepository;
 
-        public OfertaController(IProdutorKafka produtor, IOfertaFacade ofertaFacade, IOfertaRepository ofertaRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public OfertaController(IOfertaFacade ofertaFacade, IOfertaRepository ofertaRepository, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
-            produtorKafka = produtor;
             this.ofertaFacade = ofertaFacade;
             this.ofertaRepository = ofertaRepository;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Contratar([FromBody] Oferta oferta)
-        {
-            oferta.DataUltimaAtualizacao = DateTime.Now;
-            oferta.DataInsercao = DateTime.Now;
-            await produtorKafka.ProduzirMensagem("ORDEM_COMPRA", userId?.ToString(), JsonConvert.SerializeObject(oferta));
-
-            return Ok();
         }
 
         [HttpPost]
