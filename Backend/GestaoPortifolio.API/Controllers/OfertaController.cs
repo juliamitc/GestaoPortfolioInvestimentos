@@ -23,12 +23,19 @@ namespace GestaoPortifolio.API.Controllers
         }
 
         [HttpPost]
-        [Route("criar")]
         public async Task<IActionResult> PostOferta([FromBody] Oferta oferta)
         {
             oferta.DataInsercao = DateTime.Now;
             oferta.DataUltimaAtualizacao = DateTime.Now;
             var resultado = await ofertaFacade.Inserir(oferta);
+            return Ok(resultado);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutOferta([FromBody] Oferta oferta)
+        {
+            oferta.DataUltimaAtualizacao = DateTime.Now;
+            var resultado = await ofertaFacade.Alterar(oferta);
             return Ok(resultado);
         }
 
